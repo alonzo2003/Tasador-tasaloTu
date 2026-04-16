@@ -1,0 +1,22 @@
+# Base de datos local
+datos/
+*.db
+ 
+# Reportes generados
+reportes/
+ 
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+env/
+ 
+# VS Code
+.vscode/
+ 
+# Sistema
+.DS_Store
+Thumbs.db
+ 
