@@ -28,7 +28,7 @@ from reporte import generar_pdf
 # ══════════════════════════════════════════════
 
 st.set_page_config(
-    page_title="Tasalo Tú",
+    page_title="Tasador RD",
     page_icon="🚗",
     layout="centered",
     initial_sidebar_state="collapsed",
@@ -166,6 +166,8 @@ st.markdown("""
 def init_db():
     engine  = inicializar_db()
     session = get_session(engine)
+    from base_datos import cargar_datos_semilla
+    cargar_datos_semilla(session)
     return engine, session
 
 @st.cache_resource
@@ -183,7 +185,7 @@ motor           = init_motor()
 
 st.markdown("""
 <div class="hero">
-    <h1>🚗 Tasalo Tú </h1>
+    <h1>🚗 Tasador RD</h1>
     <p>Servicio Profesional de Tasación de Vehículos · República Dominicana</p>
 </div>
 """, unsafe_allow_html=True)
