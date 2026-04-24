@@ -24,12 +24,19 @@ from datetime import datetime
 import os
 
 # ─────────────────────────────────────────────
-# CONFIGURACIÓN — cambiar solo esta línea en v2
-# SQLite  : "sqlite:///datos/vehiculos.db"
-# Postgres: "postgresql://user:pass@host/dbname"
+# CONFIGURACIÓN — v2: PostgreSQL en Railway
+# Lee desde variable de entorno DATABASE_URL
+# Si no existe, usa SQLite local como fallback
 # ─────────────────────────────────────────────
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DATABASE_URL = f"sqlite:///{os.path.join(BASE_DIR, 'datos', 'vehiculos.db')}"
+
+_DB_ENV = os.environ.get("DATABASE_URL", "")
+
+# Railway a veces entrega "postgres://" — SQLAlchemy necesita "postgresql://"
+if _DB_ENV.startswith("postgres://"):
+    _DB_ENV = _DB_ENV.replace("postgres://", "postgresql://", 1)
+
+DATABASE_URL = _DB_ENV if _DB_ENV else f"sqlite:///{os.path.join(BASE_DIR, 'datos', 'vehiculos.db')}"
 
 
 
@@ -137,10 +144,27 @@ def crear_engine():
 
 
 def inicializar_db():
-    """Crea todas las tablas si no existen. Seguro de llamar múltiples veces."""
+    """Crea todas las tablas. Detecta y repara DB corrupta automaticamente."""
+    db_path = os.path.join(BASE_DIR, "datos", "vehiculos.db")
+
+    if os.path.exists(db_path):
+        try:
+            import sqlite3
+            con = sqlite3.connect(db_path)
+            con.execute("PRAGMA integrity_check")
+            con.close()
+        except Exception:
+            print("Base de datos corrupta detectada. Recreando...")
+            os.remove(db_path)
+
     engine = crear_engine()
     Base.metadata.create_all(engine)
-    print("✅ Base de datos inicializada correctamente.")
+
+    session = get_session(engine)
+    cargar_datos_semilla(session)
+    session.close()
+
+    print("Base de datos inicializada correctamente.")
     return engine
 
 
