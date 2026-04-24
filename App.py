@@ -166,8 +166,8 @@ st.markdown("""
 def init_db():
     engine  = inicializar_db()
     session = get_session(engine)
-    from base_datos import cargar_datos_semilla
-    cargar_datos_semilla(session)
+    from data_vehiculos import cargar_vehiculos_ampliados
+    cargar_vehiculos_ampliados(session)
     return engine, session
 
 @st.cache_resource
