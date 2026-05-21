@@ -28,7 +28,7 @@ from reporte import generar_pdf
 # ══════════════════════════════════════════════
 
 st.set_page_config(
-    page_title="Tasador RD",
+    page_title="TasaloTu - Tasación de Vehículos en República Dominicana",
     page_icon="🚗",
     layout="centered",
     initial_sidebar_state="collapsed",
@@ -359,27 +359,27 @@ if tasar_btn:
             st.info(dep.descripcion)
 
             # ── PDF ──────────────────────────────
-            st.markdown('<div class="sec-titulo">Reporte</div>', unsafe_allow_html=True)
+            #st.markdown('<div class="sec-titulo">Reporte</div>', unsafe_allow_html=True)
 
-            if st.button("📄 Generar y Descargar PDF"):
-                with st.spinner("Generando PDF..."):
-                    ruta_pdf = generar_pdf(resultado)
+            #if st.button("📄 Generar y Descargar PDF"):
+            #    with st.spinner("Generando PDF..."):
+             #       ruta_pdf = generar_pdf(resultado)
 
-                with open(ruta_pdf, "rb") as f:
-                    pdf_bytes = f.read()
+              #  with open(ruta_pdf, "rb") as f:
+               #     pdf_bytes = f.read()
 
-                nombre_archivo = (
-                    f"tasacion_{marca_sel}_{modelo_sel}_{anio_sel}.pdf"
-                    .replace(" ", "_")
-                )
+                #nombre_archivo = (
+                 #   f"tasacion_{marca_sel}_{modelo_sel}_{anio_sel}.pdf"
+                  #  .replace(" ", "_")
+                #)
 
-                st.download_button(
-                    label      = "⬇ Descargar PDF",
-                    data       = pdf_bytes,
-                    file_name  = nombre_archivo,
-                    mime       = "application/pdf",
-                )
-                st.success(f"PDF generado: {ruta_pdf}")
+                #st.download_button(
+                 #   label      = "⬇ Descargar PDF",
+                  #  data       = pdf_bytes,
+                   # file_name  = nombre_archivo,
+                    #mime       = "application/pdf",
+                #)
+                #st.success(f"PDF generado: {ruta_pdf}")
 
 
 # ══════════════════════════════════════════════

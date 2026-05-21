@@ -65,7 +65,7 @@ MODIFICADOR_POR_MARCA = {
     "Isuzu":         0.85,   # pickups muy demandados en RD
 
     # Marcas promedio (factor ≈ 1.0)
-    "Chevrolet":     1.00,
+    "Chevrolet":     0.75,
     "Ford":          1.00,
     "Jeep":          1.05,   # depende del modelo
     "Suzuki":        0.98,
