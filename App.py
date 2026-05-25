@@ -28,7 +28,7 @@ from reporte import generar_pdf
 # ══════════════════════════════════════════════
 
 st.set_page_config(
-    page_title="TasaloTu - Tasación de Vehículos en República Dominicana",
+    page_title="Tasalo Tú",
     page_icon="🚗",
     layout="centered",
     initial_sidebar_state="collapsed",
@@ -42,16 +42,17 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* Fondo general */
-    .stApp { background-color: #f8f9fa; }
+    .stApp { background-color: white; }
 
     /* Encabezado hero */
     .hero {
-        background: linear-gradient(135deg, #1a3a5c 0%, #2e86c1 100%);
+        background: linear-gradient(135deg, #0D1F3D 0%, #1A305C 100%);
         border-radius: 16px;
-        padding: 2rem 2rem 1.5rem;
+        padding: 2.5rem 2rem 2rem;
         text-align: center;
-        margin-bottom: 1.5rem;
-        color: white;
+        margin-bottom: 2rem;
+        color: #FFFFFF;
+        box-shadow: 0 4px 20px rgba(13, 31, 61, 0.1);
     }
     .hero h1 { font-size: 2.2rem; margin: 0; font-weight: 700; }
     .hero p  { font-size: 1rem; margin: 0.4rem 0 0; opacity: 0.85; }
@@ -141,7 +142,7 @@ st.markdown("""
 
     /* Botón tasar */
     div[data-testid="stButton"] > button {
-        background: #1a3a5c;
+        background: green;
         color: white;
         border: none;
         border-radius: 10px;
@@ -186,7 +187,7 @@ motor           = init_motor()
 st.markdown("""
 <div class="hero">
     <h1>🚗 Tasador RD</h1>
-    <p>Servicio Profesional de Tasación de Vehículos · República Dominicana</p>
+    <p>Tu Servicio de Tasación de Vehículos en RD</p>
 </div>
 """, unsafe_allow_html=True)
 
