@@ -29,7 +29,7 @@ from reporte import generar_pdf
 
 st.set_page_config(
     page_title="Tasalo Tú",
-    page_icon="🚗",
+    page_icon="img/loguito.png",
     layout="centered",
     initial_sidebar_state="collapsed",
 )
@@ -41,66 +41,129 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    /* Fondo general */
-    .stApp { background-color: white; }
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap');
 
-    /* Encabezado hero */
+    * { font-family: 'Inter', sans-serif; }
+
+    /* Fondo general — gris muy claro */
+    .stApp { background-color: #f0f2f5; }
+
+    /* ── HERO ── */
     .hero {
-        background: linear-gradient(135deg, #0D1F3D 0%, #1A305C 100%);
-        border-radius: 16px;
-        padding: 2.5rem 2rem 2rem;
+        background: linear-gradient(135deg, #0d2137 0%, #1a3a5c 60%, #1d4e6e 100%);
+        border-radius: 20px;
+        padding: 2.2rem 2rem 1.8rem;
         text-align: center;
-        margin-bottom: 2rem;
-        color: #FFFFFF;
-        box-shadow: 0 4px 20px rgba(13, 31, 61, 0.1);
+        margin-bottom: 1.8rem;
+        box-shadow: 0 8px 32px rgba(13,33,55,0.18);
     }
-    .hero h1 { font-size: 2.2rem; margin: 0; font-weight: 700; }
-    .hero p  { font-size: 1rem; margin: 0.4rem 0 0; opacity: 0.85; }
-
-    /* Tarjeta resultado */
-    .resultado-card {
-        background: white;
-        border-radius: 16px;
-        padding: 1.5rem;
-        border: 1px solid #e0e0e0;
-        margin-top: 1rem;
+    .hero-logo {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 14px;
+        margin-bottom: 0.5rem;
+    }
+    .hero-logo img {
+        height: 56px;
+        border-radius: 10px;
+    }
+    .hero-titulo {
+        font-size: 2.4rem;
+        font-weight: 800;
+        color: white;
+        letter-spacing: -0.02em;
+        margin: 0;
+        line-height: 1;
+    }
+    .hero-titulo span { color: #2ecc71; }
+    .hero-sub {
+        font-size: 1rem;
+        color: rgba(255,255,255,0.75);
+        margin: 0.5rem 0 0;
+        font-weight: 400;
     }
 
-    /* Valor final grande */
+    /* ── FORMULARIO ── */
+    .stSelectbox label,
+    .stTextInput label,
+    .stNumberInput label {
+        font-size: 0.85rem !important;
+        font-weight: 600 !important;
+        color: #2c3e50 !important;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+    }
+
+    /* Selectbox oscuro como el mockup */
+    .stSelectbox > div > div {
+        background-color: #1e2d3d !important;
+        color: white !important;
+        border: none !important;
+        border-radius: 10px !important;
+        font-size: 0.97rem !important;
+        font-weight: 500 !important;
+    }
+    .stSelectbox svg { color: white !important; fill: white !important; }
+
+    /* ── BOTÓN PRINCIPAL ── */
+    div[data-testid="stButton"] > button {
+        background: #2ecc71 !important;
+        color: #0d2137 !important;
+        border: none !important;
+        border-radius: 12px !important;
+        padding: 0.85rem 2rem !important;
+        font-size: 1.05rem !important;
+        font-weight: 700 !important;
+        width: 100% !important;
+        letter-spacing: 0.02em;
+        box-shadow: 0 4px 16px rgba(46,204,113,0.3);
+        transition: all 0.2s !important;
+    }
+    div[data-testid="stButton"] > button:hover {
+        background: #27ae60 !important;
+        box-shadow: 0 6px 20px rgba(46,204,113,0.4) !important;
+        transform: translateY(-1px);
+    }
+
+    /* ── VALOR FINAL ── */
     .valor-final {
-        background: #eafaf1;
-        border: 2px solid #1e8449;
-        border-radius: 12px;
-        padding: 1.2rem;
+        background: linear-gradient(135deg, #eafaf1, #d5f5e3);
+        border: 2px solid #2ecc71;
+        border-radius: 16px;
+        padding: 1.4rem;
         text-align: center;
         margin: 1rem 0;
+        box-shadow: 0 4px 16px rgba(46,204,113,0.15);
     }
     .valor-final .label {
-        font-size: 0.85rem;
+        font-size: 0.78rem;
         color: #1e8449;
-        font-weight: 600;
+        font-weight: 700;
         text-transform: uppercase;
-        letter-spacing: 0.05em;
+        letter-spacing: 0.08em;
     }
     .valor-final .monto {
-        font-size: 2.6rem;
-        font-weight: 700;
-        color: #1e8449;
-        margin: 0.2rem 0;
+        font-size: 2.8rem;
+        font-weight: 800;
+        color: #1a5e36;
+        margin: 0.3rem 0;
+        letter-spacing: -0.02em;
     }
     .valor-final .equiv {
         font-size: 0.95rem;
         color: #27ae60;
+        font-weight: 500;
     }
 
-    /* Fila de desglose */
+    /* ── FILAS DESGLOSE ── */
     .fila-desglose {
         display: flex;
         justify-content: space-between;
         align-items: center;
-        padding: 0.5rem 0;
-        border-bottom: 1px solid #f0f0f0;
-        font-size: 0.95rem;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid #eef0f2;
+        font-size: 0.94rem;
     }
     .fila-desglose:last-child { border-bottom: none; }
     .fila-label { color: #566573; }
@@ -109,14 +172,33 @@ st.markdown("""
     .fila-valor.suma      { color: #27ae60; }
     .fila-total {
         font-size: 1rem;
-        font-weight: 700;
-        color: #1a3a5c;
-        border-top: 2px solid #1a3a5c !important;
+        font-weight: 800;
+        color: #0d2137;
+        border-top: 2px solid #0d2137 !important;
         padding-top: 0.7rem !important;
         margin-top: 0.3rem;
     }
 
-    /* Badge de fuente */
+    /* ── SECCIÓN TÍTULO ── */
+    .sec-titulo {
+        font-size: 0.75rem;
+        font-weight: 700;
+        color: #0d2137;
+        text-transform: uppercase;
+        letter-spacing: 0.08em;
+        margin: 1.4rem 0 0.6rem;
+        padding-bottom: 5px;
+        border-bottom: 2px solid #2ecc71;
+    }
+
+    /* ── EXPANDER ── */
+    .streamlit-expanderHeader {
+        background: white !important;
+        border-radius: 10px !important;
+        border: 1px solid #e0e0e0 !important;
+    }
+
+    /* ── BADGES ── */
     .badge {
         display: inline-block;
         font-size: 0.72rem;
@@ -128,32 +210,14 @@ st.markdown("""
     .badge-est     { background: #fef9e7; color: #7d6608; }
     .badge-scraper { background: #eafaf1; color: #1e8449; }
 
-    /* Sección título */
-    .sec-titulo {
-        font-size: 0.78rem;
-        font-weight: 700;
-        color: #1a3a5c;
-        text-transform: uppercase;
-        letter-spacing: 0.07em;
-        margin: 1.2rem 0 0.5rem;
-        padding-bottom: 4px;
-        border-bottom: 2px solid #2e86c1;
-    }
+    /* ── MÉTRICAS ── */
+    div[data-testid="metric-container"] {
+        background: white;
+        border-radius: 12px;
+        padding: 1rem;
+        border: 1px solid #eef0f2;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.04);
 
-    /* Botón tasar */
-    div[data-testid="stButton"] > button {
-        background: green;
-        color: white;
-        border: none;
-        border-radius: 10px;
-        padding: 0.7rem 2rem;
-        font-size: 1rem;
-        font-weight: 600;
-        width: 100%;
-        transition: background 0.2s;
-    }
-    div[data-testid="stButton"] > button:hover {
-        background: #2e86c1;
     }
 </style>
 """, unsafe_allow_html=True)
@@ -184,13 +248,23 @@ motor           = init_motor()
 # HERO HEADER
 # ══════════════════════════════════════════════
 
-st.markdown("""
+import base64
+_logo_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "img","logo.png")
+_logo_b64 = ""
+if os.path.exists(_logo_path):
+    with open(_logo_path, "rb") as _f:
+        _logo_b64 = base64.b64encode(_f.read()).decode()
+
+_logo_html = f'<img src="data:image/png;base64,{_logo_b64}" />' if _logo_b64 else "🚗"
+
+st.markdown(f"""
 <div class="hero">
-    <h1>🚗 Tasador RD</h1>
-    <p>Tu Servicio de Tasación de Vehículos en RD</p>
+    <div class="hero-logo">
+        {_logo_html}
+    </div>
+    <p class="hero-sub">Tu Servicio de Tasación de Vehículos en RD</p>
 </div>
 """, unsafe_allow_html=True)
-
 
 # ══════════════════════════════════════════════
 # FORMULARIO
